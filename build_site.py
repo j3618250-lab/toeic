@@ -15,13 +15,18 @@ gerund_verbs = [
 ('keep','계속하다'),('give up','포기하다'),('mind','꺼리다'),('finish','끝내다'),('consider','고려하다'),
 ('recommend','추천하다'),('admit','인정하다'),('discontinue','중단하다'),('quit','그만두다'),
 ('include','포함하다'),('object to','반대하다'),('postpone','미루다'),('imagine','상상하다')]
-subjects=['The marketing team','Our supervisor','The committee','The operations manager','The client']
-actions=['launching the campaign','revising the schedule','using the new system','moving the deadline','opening a new branch']
+subjects=['The employees','Our supervisors','The committee members','The operations managers','The clients']
+actions=[
+('launching the campaign','to launch the campaign','launched the campaign','launch the campaign','캠페인을 시작하는'),
+('revising the schedule','to revise the schedule','revised the schedule','revise the schedule','일정을 수정하는'),
+('using the new system','to use the new system','used the new system','use the new system','새 시스템을 사용하는'),
+('moving the deadline','to move the deadline','moved the deadline','move the deadline','마감일을 옮기는'),
+('opening a new branch','to open a new branch','opened a new branch','open a new branch','새 지점을 여는')]
 for i,(v,meaning) in enumerate(gerund_verbs):
-    s,a=subjects[i%len(subjects)],actions[i%len(actions)]
+    s,forms=subjects[i%len(subjects)],actions[i%len(actions)]; a,to_a,past_a,base_a,ko_a=forms
     prep='' if v!='object to' else ''
-    add('동명사 vs to부정사','V-ing vs to V',f'{s} {v} ______.',[a,a.replace('ing ','e ') if 'ing ' in a else 'to '+a,a.replace('ing','ed'),a.split()[0]],0,
-        f'{s}는 {a}을/를 {meaning}.',f'{v}는 목적어로 동명사(V-ing)를 취합니다.',
+    add('동명사 vs to부정사','V-ing vs to V',f'{s} {v} ______.',[a,to_a,past_a,base_a],0,
+        f'해당 주체는 {ko_a} 것을 {meaning}.',f'{v}는 목적어로 동명사(V-ing)를 취합니다.',
         'to부정사·과거분사·동사원형은 이 동사의 목적어 형태가 될 수 없습니다.',f'{v} + V-ing = ~하는 것을 {meaning}', '오전 사진 30쪽')
 
 noun_to = [('time','시간'),('right','권리'),('need','필요'),('failure','실패'),('attempt','시도'),('proposal','제안'),('obligation','의무'),('duty','의무'),('way','방법'),('plan','계획'),('intention','의도'),('decision','결정'),('effort','노력'),('opportunity','기회'),('chance','기회'),('ability','능력'),('capacity','능력')]
