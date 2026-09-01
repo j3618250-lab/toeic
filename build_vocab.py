@@ -71,7 +71,7 @@ V=[
 ('organize','준비하다; 조직하다','v','Ms. Lee was asked to organize the annual workshop.','이 씨는 연례 워크숍을 준비해 달라는 요청을 받았다.','organize an event'),
 ('familiar','익숙한','adj','All staff should be familiar with the emergency procedure.','모든 직원은 비상 절차를 숙지해야 한다.','be familiar with'),
 ('revision','수정; 개정','n','The latest revision of the plan includes a larger lobby.','계획의 최신 수정본에는 더 큰 로비가 포함되어 있다.','make/review a revision'),
-('fairly','꽤; 상당히','adv','The instructions are fairly easy to follow.','그 지침은 따르기가 꽤 쉽다.','fairly + 형용사'),
+('fairly','꽤; 상당히; 공정하게','adv','The instructions are fairly easy to follow.','그 지침은 따르기가 꽤 쉽다.','fairly + 형용사 = 꽤 / treat A fairly = A를 공정하게 대하다'),
 ('depletion','고갈','n','Water depletion is a serious concern in the region.','수자원 고갈은 그 지역의 심각한 우려 사항이다.','resource depletion'),
 ('flammable','가연성의','adj','Flammable materials must be stored separately.','가연성 물질은 별도로 보관해야 한다.','flammable materials'),
 ('intermittently','간헐적으로','adv','The network may operate intermittently during maintenance.','유지보수 중에는 네트워크가 간헐적으로 작동할 수 있다.','operate intermittently'),
@@ -257,6 +257,9 @@ V.extend([
 ('continually','계속해서; 반복적으로','adv','The company continually updates its security system.','회사는 보안 시스템을 계속해서 업데이트한다.','continually improve/update')
 ])
 
+# Keep one study pair per headword even when it appeared in more than one photo batch.
+_seen=set();V=[x for x in V if not (x[0].lower() in _seen or _seen.add(x[0].lower()))]
+
 def choices(i, field, pos=None):
     pool=[x for j,x in enumerate(V) if j!=i and (pos is None or x[2]==pos)]
     if len(pool)<3: pool=[x for j,x in enumerate(V) if j!=i]
@@ -268,6 +271,10 @@ SURFACE={
  'assure A of B':'assure','prevent A from V-ing':'prevents','modify':'modified',
  'acknowledge a contribution':'acknowledged','expect A to V':'expect','surge over':'surged'
 }
+MEANING_BY_FORM={}
+for _w,_m,*_ in V:
+    MEANING_BY_FORM[_w.lower()]=_m
+    MEANING_BY_FORM[SURFACE.get(_w,_w[3:] if _w.startswith('be ') else _w).lower()]=_m
 for i,(word,meaning,pos,sentence,translation,memory) in enumerate(V):
     # stage 1: meaning recognition
     out.append({'id':f'v{i+1:03d}-1','pairId':f'v{i+1:03d}','stage':1,'category':'사진 단어','label':'단어 1/2',
@@ -289,5 +296,22 @@ for i,q in enumerate(out):
     target=i%4; ans=q['choices'][q['answer']]
     rest=[x for j,x in enumerate(q['choices']) if j!=q['answer']]
     rest.insert(target,ans); q['choices']=rest; q['answer']=target
+    if q['stage']==1:
+        reasons=[]
+        for j,c in enumerate(q['choices']):
+            owners=[w for w,m,*_ in V if m==c]
+            owner=' / '.join(owners[:2]) if owners else '다른 사진 단어'
+            reasons.append(f'{"ABCD"[j]}. {c}: '+(f'“{V[i//2][0]}”의 핵심 뜻이므로 정답입니다.' if j==q['answer'] else f'이 뜻은 “{owner}”에 해당하므로 오답입니다.'))
+        q['wrongReasons']=reasons
+    else:
+        target_word=V[i//2][0];target_meaning=V[i//2][1]
+        reasons=[]
+        for j,c in enumerate(q['choices']):
+            meaning=MEANING_BY_FORM.get(c.lower(),'사진에 나온 다른 표현')
+            if j==q['answer']:
+                reasons.append(f'{"ABCD"[j]}. {c}: “{target_meaning}”라는 뜻으로 문맥과 문장 구조를 모두 충족하는 정답입니다.')
+            else:
+                reasons.append(f'{"ABCD"[j]}. {c}: “{meaning}”라는 뜻입니다. 이 문장에는 “{target_word}({target_meaning})”가 필요하므로 오답입니다.')
+        q['wrongReasons']=reasons
 (ROOT/'vocab_questions.js').write_text('window.VOCAB_QUESTIONS='+json.dumps(out,ensure_ascii=False,separators=(',',':'))+';\n',encoding='utf-8')
 print(json.dumps({'words':len(V),'questions':len(out),'answers':[sum(x['answer']==i for x in out) for i in range(4)]},ensure_ascii=False))
