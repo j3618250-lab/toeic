@@ -51,29 +51,26 @@ for i,(p,k) in enumerate(ing_phrases):
 
 time_place=[('in March','3월에'),('in 2060','2060년에'),('in the summer','여름에'),('in the evening','저녁에'),('in the lobby','로비에서'),('in the waiting room','대기실에서'),('in the lounge','라운지에서'),('at 7 o’clock','7시에'),('at the end of the month','이달 말에'),('at noon','정오에'),('at night','밤에'),('at the post office','우체국에서'),('at the airport','공항에서'),('at the hospital','병원에서'),('on Friday','금요일에'),('on March 8','3월 8일에'),('on the shelf','선반 위에'),('on the seventh floor','7층에'),('on the Web site','웹사이트에서')]
 for i,(expr,k) in enumerate(time_place):
-    prep=expr.split()[0]
-    add('전치사','in vs at vs on',f'The information will be available ______ {expr[len(prep)+1:]}.',['in','at','on','by'],['in','at','on','by'].index(prep),
-        f'그 정보는 {k} 이용할 수 있다.',f'{expr}가 자연스러운 시간·장소 전치사 결합입니다.',
-        '나머지 전치사는 뒤 명사가 나타내는 시간의 크기나 장소의 성격과 맞지 않습니다.',expr,'오전 사진 32쪽')
+    add('전치사','in vs at vs on',f'The expression “{expr}” is closest in meaning to ______.',[k,'마감일까지','~에도 불구하고','~때문에'],0,
+        f'“{expr}”는 “{k}”라는 뜻이다.',f'{expr}는 사진 표에 나온 자연스러운 시간·장소 전치사 결합입니다.',
+        '나머지는 각각 종료시점·양보·원인을 나타내 이 표현의 의미가 아닙니다.',expr,'오전 사진 32쪽')
 
 preps=[('within two weeks','2주 이내에'),('within 24 hours','24시간 이내에'),('within three months','3개월 이내에'),('within the company','회사 내에서'),('within the city limits','시 경계 안에서'),('throughout the last decade','지난 10년 내내'),('throughout the year','일 년 내내'),('throughout the workshop','워크숍 내내'),('throughout the handbook','안내서 곳곳에'),('throughout the building','건물 곳곳에'),('in front of the museum','박물관 앞에'),('behind the column','기둥 뒤에'),('under the table','테이블 아래에'),('above the floor','바닥 위쪽에'),('over the water','수면 위에'),('next to the fountain','분수대 옆에'),('beside the fountain','분수대 옆에'),('by the window','창가에'),('by the river','강가에'),('opposite the supermarket','슈퍼마켓 맞은편에'),('across from the supermarket','슈퍼마켓 맞은편에'),('between Maple Street and 7th Avenue','메이플가와 7번가 사이에'),('among new employees','신입 직원들 사이에'),('toward the airport','공항을 향해'),('into the new building','새 건물 안으로'),('along the border','국경을 따라'),('along the lane','차선을 따라'),('past the market','시장을 지나')]
 for i,(expr,k) in enumerate(preps):
-    first=expr.split()[0]
-    opts=[first,'during','until','despite']
-    add('전치사','전치사 의미 구별',f'The notice applies ______ {expr[len(first)+1:]}.',opts,0,f'그 공지는 {k} 적용된다.',
-        f'{expr}가 문맥에 맞는 전치사구입니다.','during은 특정 사건 동안, until은 지속의 종료점, despite는 양보를 나타내 이 문맥과 맞지 않습니다.',expr,'오전 사진 32~33쪽')
+    add('전치사','전치사 의미 구별',f'The expression “{expr}” is closest in meaning to ______.',[k,'마감일까지','~때문에','~에도 불구하고'],0,f'“{expr}”는 “{k}”라는 뜻이다.',
+        f'{expr}의 정확한 의미와 결합을 묻는 문제입니다.','나머지는 종료시점·원인·양보를 나타내 이 표현과 뜻이 다릅니다.',expr,'오전 사진 32~33쪽')
 
 special=[('without','~없이'),('as','~로서'),('despite','~에도 불구하고'),('regarding','~에 관하여'),('except for','~를 제외하고'),('following','~후에'),('including','~를 포함하여'),('in addition to','~이외에도'),('due to','~때문에'),('in advance of','~전에'),('other than','~이외에도'),('prior to','~전에'),('owing to','~때문에'),('aside from','~를 제외하고/~이외에도'),('apart from','~를 제외하고/~이외에도'),('in spite of','~에도 불구하고'),('regardless of','~와 상관없이'),('instead of','~대신에'),('because of','~때문에')]
 for i,(p,k) in enumerate(special):
-    add('전치사','전치사 vs 접속사',f'The event continued ______ the heavy rain.',[p,'although','because','while'],0,
-        f'행사는 폭우{k} 계속되었다.',f'{p}는 뒤에 명사구를 받는 전치사(구)입니다.',
-        'although/because/while은 접속사라 뒤에 주어+동사의 절이 필요합니다.',f'{p} + 명사 = {k}', '오전 사진 34쪽')
+    add('전치사','전치사 vs 접속사',f'The expression “{p}” is closest in meaning to ______.',[k,'~하는 동안','~라면','~할 수 있도록'],0,
+        f'“{p}”는 “{k}”라는 뜻이다.',f'{p}는 뒤에 명사구를 받는 전치사(구)입니다.',
+        '나머지는 시간·조건·목적을 나타내는 접속사 의미입니다.',f'{p} + 명사 = {k}', '오전 사진 34쪽')
 
 conjs=[('if','~라면'),('provided that','~라면'),('providing that','~라면'),('unless','~가 아니라면'),('as long as','~하는 한'),('once','일단 ~하면'),('so that','~할 수 있도록'),('in order that','~할 수 있도록'),('whereas','~인 반면에'),('while','~인 반면에'),('as if','마치 ~인 것처럼'),('as though','마치 ~인 것처럼'),('as soon as','~하자마자'),('although','~에도 불구하고'),('though','~에도 불구하고'),('even if','비록 ~일지라도'),('even though','~에도 불구하고'),('because','~때문에'),('since','~때문에/~이래로'),('now that','이제 ~이므로'),('in case that','~의 경우에 대비하여'),('given that','~을 고려하면'),('considering that','~을 고려하면')]
 for i,(c,k) in enumerate(conjs):
-    add('접속사','전치사 vs 접속사',f'______ all documents are complete, we can process the request.',[c,'despite','because of','during'],0,
-        f'모든 서류가 완비되었으므로/완비된다면 우리는 요청을 처리할 수 있다.',f'{c}는 뒤의 주어+동사 절을 연결하는 접속사입니다.',
-        'despite/because of/during은 전치사라 완전한 절을 직접 받을 수 없습니다.',f'{c} + S + V = {k}', '오전 사진 35~36쪽')
+    add('접속사','전치사 vs 접속사',f'The conjunction “{c}” is closest in meaning to ______.',[k,'~에 관하여','~를 제외하고','~앞에'],0,
+        f'접속사 “{c}”는 “{k}”라는 뜻이다.',f'{c}는 뒤의 주어+동사 절을 연결하는 접속사입니다.',
+        '나머지는 전치사 의미이므로 절을 이끄는 이 접속사의 뜻과 다릅니다.',f'{c} + S + V = {k}', '오전 사진 35~36쪽')
 
 reduced=[('when','submitting','제출할 때'),('while','reviewing','검토하는 동안'),('before','entering','들어가기 전에'),('after','checking','확인한 후'),('since','joining','입사한 이후로'),('when','approved','승인될 때'),('if','selected','선발된다면'),('unless','accompanied','동반되지 않는다면'),('as','discussed','논의된 대로'),('once','submitted','일단 제출되면'),('although','limited','제한적임에도')]
 for i,(c,form,k) in enumerate(reduced):
@@ -84,9 +81,9 @@ for i,(c,form,k) in enumerate(reduced):
 
 noun_conj=[('that','~라는 것'),('whether','~인지 아닌지'),('if','~인지 아닌지'),('who','누가 ~하는지'),('what','무엇을 ~하는지'),('which','어느 것이 ~하는지'),('when','언제 ~하는지'),('where','어디서 ~하는지'),('how','어떻게 ~하는지'),('why','왜 ~하는지')]
 for i,(c,k) in enumerate(noun_conj):
-    add('명사절','명사절 접속사',f'The manager explained ______ the schedule had changed.',[c,'because','although','during'],0,
-        f'관리자는 일정이 바뀐 것/왜·어떻게 바뀌었는지를 설명했다.',f'{c}가 뒤 절을 한 덩어리의 명사절로 만들어 explained의 목적어 역할을 합니다.',
-        'because/although는 부사절 접속사이고 during은 전치사라 목적어 명사절을 만들지 못합니다.',f'{c} + S + V = {k}', '오전 사진 37~38쪽')
+    add('명사절','명사절 접속사',f'The noun-clause marker “{c}” is closest in meaning to ______.',[k,'~에도 불구하고','~하는 동안','~때문에'],0,
+        f'명사절 표지 “{c}”는 “{k}”라는 뜻이다.',f'{c}가 뒤 절을 한 덩어리의 명사절로 만들어 주어·목적어·보어 역할을 하게 합니다.',
+        '나머지는 양보·시간·원인의 부사 관계를 나타내 명사절 표지의 뜻이 아닙니다.',f'{c} + S + V = {k}', '오전 사진 37~38쪽')
 
 # 기존 사이트의 핵심 문제은행: 의미·문장 중복 없이 개별 학습 포인트를 보존한다.
 existing=[
