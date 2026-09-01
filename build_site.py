@@ -32,7 +32,8 @@ for i,(n,k) in enumerate(noun_to):
 
 to_patterns=[('be able to','~할 수 있다'),('be anxious to','~하기를 원하다'),('be willing to','기꺼이 ~하다'),('be liable to','~할 것 같다'),('be available to','~할 시간이 있다'),('be pleased to','기쁘게 ~하다'),('be delighted to','기쁘게 ~하다'),('be eager to','~하기를 갈망하다'),('be likely to','~할 것 같다'),('be apt to','~하기 쉽다'),('be about to','막 ~하려고 하다'),('be supposed to','~하기로 되어 있다'),('be intended to','~하도록 의도되다'),('be reluctant to','~하기를 꺼리다'),('be due to','~할 예정이다'),('be scheduled to','~할 예정이다'),('be designed to','~하도록 제작되다'),('be ready to','~할 준비가 되다'),('be invited to','~하라고 초대받다'),('be requested to','~하라고 요청받다'),('be required to','~해야 한다'),('be advised to','~하라고 권고받다'),('be instructed to','~하라고 지시받다')]
 for i,(p,k) in enumerate(to_patterns):
-    base=p[:-2]
+    base=p[:-2].strip()
+    if base.startswith('be '): base=base[3:]
     add('동명사 vs to부정사','V-ing vs to V',f'The employee is {base.strip()} ______ the orientation.', ['to attend','attending','attended','attend'],0,
         f'그 직원은 오리엔테이션에 참석하도록 되어 있다/참석할 준비가 되어 있다.',f'{p}처럼 이 표현 뒤에는 to부정사가 옵니다.',
         '동명사·과거분사·원형은 이 고정 표현을 완성하지 못합니다.',f'{p} V = {k}', '오전 사진 28~29쪽')
